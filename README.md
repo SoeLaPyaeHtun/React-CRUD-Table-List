@@ -2,6 +2,7 @@
 - List and Add data 
 - Search 
 - PopUp Model Form
+- Pagination
 
 
 # How to run

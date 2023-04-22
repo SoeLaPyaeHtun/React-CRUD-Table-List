@@ -5,48 +5,93 @@ import SummaryModel from './SummaryModel'
 
 const Summary = () => {
 
-const statusList = ["Pending File Upload", "Pending Analysis", "During Analysis", "Complete"]
+  const statusList = ["Pending File Upload", "Pending Analysis", "During Analysis", "Complete"]
 
-const [summaries , setSummary] = useState([])
+  const [summaries, setSummary] = useState([])
 
-const [showsummarymodel , setSummarymodel] = useState(false)
+  const [currentPage, setPage] = useState(1)
 
-const [query , setQuery] = useState("")
+  const summariesPerPage = 12
 
-const closesummarymodel = () => setSummarymodel(false)
+  const lastIndex = currentPage * summariesPerPage
 
-const columns = ["name", "create_by"]
+  const firstIndex = lastIndex - summariesPerPage
+
+  const [showsummarymodel, setSummarymodel] = useState(false)
+
+  const [query, setQuery] = useState("")
+
+  const closesummarymodel = () => setSummarymodel(false)
+
+  const columns = ["name", "create_by"]
 
 
-const fetchSummary = async() => {
-  const res = await api.get('summarylist/')
- 
-  setSummary(res.data)
-}
+  const fetchSummary = async () => {
+    const res = await api.get('summarylist/')
 
-useEffect(()=>{
-  fetchSummary()
-},[])
+    setSummary(res.data)
+  }
 
-const searchResult = summaries.filter((summary) => columns.some((column) => summary[column].toLowerCase().includes(query)));
+  useEffect(() => {
+    fetchSummary()
+  }, [])
 
-console.log(searchResult.length)
+  console.log("first" + firstIndex)
+  console.log("last" + lastIndex)
+
+
+
+  const summariesSlice = summaries.concat().reverse().slice(firstIndex, lastIndex)
+
+  // console.log("///")
+  // console.log(summaries.concat().reverse())
+  // console.log("///")
+
+  console.log(summariesSlice)
+
+  const noOfPage = Math.ceil(summaries.length / summariesPerPage)
+
+  const numbers = [...Array(noOfPage + 1).keys()].slice(1);
+
+  console.log(numbers)
+
+  const changePage = (e, number) => {
+    e.preventDefault();
+    setPage(number)
+  }
+
+
+  const searchResult = summaries.filter((summary) => columns.some((column) => summary[column].toLowerCase().includes(query)));
+
+  const previousPage = (e) => {
+    e.preventDefault();
+    if (currentPage !== firstIndex) {
+      setPage(currentPage - 1)
+    }
+  }
+
+  const nextPage = (e) => {
+    e.preventDefault();
+    if (currentPage !== firstIndex) {
+      setPage(currentPage + 1)
+    }
+  }
+
+  console.log("search" + searchResult.length)
 
   return (
     <div className='w-full h-screen flex felx-col justify-center'>
 
-      <SummaryModel closesummarymodel={closesummarymodel} visible={showsummarymodel}/>
-     
-      <div className='w-3/4 borderpt-5'>
+      <SummaryModel closesummarymodel={closesummarymodel} visible={showsummarymodel} />
+
+      <div className='w-3/4 h-screen borderpt-5'>
 
 
         <div className='flex justify-between items-center py-5 border-y-2 border-blue-200'>
-          <div className='relative'>
-            {/* <form>
-              <input type='text' placeholder='Search' className='border border-blue-300 rounded-lg px-10 py-2' onChange={e => setQuery(e.target.value)}/>
-            </form> */}
-              <input type='text' onChange={(e) => setQuery(e.target.value)} id='search' className='w-full border-b-2 border-blue-200 focus:border-b-3 focus:border-blue-300 px-5 py-1 transition-colors focus:outline-none peer' autoComplete="off" required/>
-              <label htmlFor='search' className='absolute left-0 top-1 cursor-text peer-focus:text-sm peer-focus:-top-4 peer-focus:text-blue-500 transition-all duration-300'>Search </label>
+          <div className=''>
+         
+          <input type='text' onChange={e => setQuery(e.target.value)} placeholder='Search' id='search' className='w-full border-b-2 border-blue-200 focus:border-b-3 focus:border-blue-300 px-5 py-1 transition-colors focus:outline-none peer' autoComplete="off" />
+           
 
           </div>
           <div className='px-5'>
@@ -80,40 +125,66 @@ console.log(searchResult.length)
             </thead>
             <tbody className='bg-white-600'>
 
-             {
-               searchResult <= 0 ?
+              {
+                searchResult.length == summaries.length ?
 
-               summaries.map((summary, index) => (
-                <tr key={index} className='border-b-2 text-center'>
-                <td> <input type="checkbox" /> </td>
-                  <td className='p-3'>{summary.create_on}</td>
-                  <td className='p-3'> <a href="#" className='text-blue-500 hover:text-blue-700 underline'>{summary.name}</a> </td>
-                  <td className='p-3'>{summary.create_by}</td>
-                  <td className='p-3'>{statusList[summary.status]}</td>
-                </tr>
-               
-               )) :
-               searchResult.map((summary, index) => (
-                <tr key={index} className='border-b-2 text-center'>
-                <td> <input type="checkbox" /> </td>
-                  <td className='p-3'>{summary.create_on}</td>
-                  <td className='p-3'> <a href="#" className='text-blue-500 hover:text-blue-700 underline'>{summary.name}</a> </td>
-                  <td className='p-3'>{summary.create_by}</td>
-                  <td className='p-3'>{statusList[summary.status]}</td>
-                </tr>
-               ))
-             }
+                  summariesSlice.map((summary, index) => (
+                    <tr key={index} className='border-b-2 text-center'>
+                      <td> <input type="checkbox" /> </td>
+                      <td className='p-3'>{summary.create_on}</td>
+                      <td className='p-3'> <a href="#" className='text-blue-500 hover:text-blue-700 underline'>{summary.name}</a> </td>
+                      <td className='p-3'>{summary.create_by}</td>
+                      <td className='p-3'>{statusList[summary.status]}</td>
+                    </tr>
 
-          
-
-
-
+                  )) :
+                  searchResult.map((summary, index) => (
+                    <tr key={index} className='border-b-2 text-center'>
+                      <td> <input type="checkbox" /> </td>
+                      <td className='p-3'>{summary.create_on}</td>
+                      <td className='p-3'> <a href="#" className='text-blue-500 hover:text-blue-700 underline'>{summary.name}</a> </td>
+                      <td className='p-3'>{summary.create_by}</td>
+                      <td className='p-3'>{statusList[summary.status]}</td>
+                    </tr>
+                  ))
+              }
             </tbody>
           </table>
         </div>
 
 
+        {
+          searchResult.length == summaries.length ?
+            <div className='flex justify-center items-center py-5 '>
+
+              <ul className="inline-flex -space-x-px">
+                <li>
+                  <a href="" onClick={(e) => previousPage(e)} className={currentPage == Math.min(...numbers) ? "invisible" : "px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"}>Previous</a>
+                </li>
+                {
+                  numbers.map((number, index) => (
+                    <li key={index}>
+                      <a href="" onClick={(e) => changePage(e, number)} className={currentPage == number ? "px-3 py-2 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white" : "px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"} >
+                        {number}
+                      </a>
+                    </li>
+                  ))
+                }
+                <li>
+                  <a href="" onClick={(e) => nextPage(e)} className={currentPage == Math.max(...numbers) ? "invisible" : "px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"}>Next</a>
+                </li>
+              </ul>
+
+            </div>
+            :
+            <div></div>
+        }
+
+
+
       </div>
+
+
     </div>
   )
 }
