@@ -3,6 +3,7 @@
 - Search 
 - PopUp Model Form
 - Pagination
+- Multi delete function with checkbox
 
 
 # How to run
