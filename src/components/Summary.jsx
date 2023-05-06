@@ -5,13 +5,16 @@ import SummaryModel from './SummaryModel'
 
 const Summary = () => {
 
-  const statusList = ["Pending File Upload", "Pending Analysis", "During Analysis", "Complete"]
+  const statusList = ["Inactive","Active"]
 
   const [summaries, setSummary] = useState([])
 
   const [currentPage, setPage] = useState(1)
 
   const [summaryToDelete, setSummaryToDelete] = useState([])
+  const [summaryToUpdate, setSummaryToUpdate] = useState([])
+
+  const [ updateBtn , setUpdateBtn ] = useState(false)
 
   const summariesPerPage = 12
 
@@ -55,7 +58,7 @@ const Summary = () => {
     setPage(number)
   }
 
-  const handleSelect = (summary) => {
+  const handleSelectToDelete = (summary) => {
 
     if (summaryToDelete.includes(summary)) {
       setSummaryToDelete(summaryToDelete.filter(item => item !== summary));
@@ -64,6 +67,24 @@ const Summary = () => {
 
     setSummaryToDelete((previousSummary) => previousSummary.concat(summary))
   }
+
+
+
+  const handleSelectToUpdate = (summary,e) => {
+
+    summary['status'] = e.target.value;
+    if (summaryToUpdate.map(summary => summary.id).includes(summary.id)) {
+      setSummaryToUpdate(summaryToUpdate.filter(item => item !== summary));
+      setSummaryToUpdate((previousSummary) => previousSummary.concat(summary));
+      return
+    }
+
+    setSummaryToUpdate((previousSummary) => previousSummary.concat(summary))
+
+  }
+
+  console.log(summaryToUpdate)
+ 
 
   const handleAllSelect = (e) => {
     if(e.target.checked){
@@ -116,6 +137,17 @@ const Summary = () => {
     window.location.reload(true);
   }
 
+  const handleUpdate = () => {
+    let updateList_id = summaryToUpdate.map((summary) => summary.id)
+    let updateList = summaryToUpdate.map((summary) => summary)
+    for(var i = 0; i < updateList_id.length ; i++){
+      updateSummary(updateList_id[i], updateList[i])
+    }
+
+    setSummaryToDelete([])
+    window.location.reload(true);
+  }
+
   const deleteSummary = async (id) => {
 
       const res = await api.delete(`/summarylist/${id}`)
@@ -124,6 +156,14 @@ const Summary = () => {
            setSummary(summaries.filter(summary => summary.id !== id))
          }
     };
+
+  const updateSummary = async(id, summary) => {
+    const res = await api.put(`/summarylist/${id}`, {summary})
+  }
+
+  const handelStatus = () => {
+    setUpdateBtn(false)
+  }
 
 
 
@@ -158,6 +198,19 @@ const Summary = () => {
               onClick={() => handleDelete()}>Delete ({summaryToDelete.length})</button>
               <span className='px-3'></span>
             <button className='bg-blue-200 px-3 py-2 rounded-lg hover:bg-blue-300' onClick={() => setSummarymodel(true)}>Create New Submission + </button>
+            <span className='px-3'></span>
+            {
+              updateBtn ? 
+              <button className='bg-green-200 px-3 py-2 rounded-lg hover:bg-green-300' onClick={(handelStatus)}> Save Status </button>
+              :
+              <button className='bg-green-200 px-3 py-2 rounded-lg hover:bg-green-300' onClick={() => setUpdateBtn(true)}> Update Status </button>
+
+            }
+            {/* <button className='bg-green-200 px-3 py-2 rounded-lg hover:bg-green-300' onClick={() => updateBtn ? setUpdateBtn(false) : setUpdateBtn(true)}> 
+            {
+              updateBtn ? "Save Status" : "Update Status"
+            }
+            </button> */}
           </div>
         </div>
 
@@ -184,23 +237,44 @@ const Summary = () => {
 
 
                       <td>
-                        {summaryToDelete.includes(summary) ? <input type="checkbox" onChange={() => handleSelect(summary)} checked /> :
-                          <input type="checkbox" onChange={() => handleSelect(summary)} />}  </td>
+                        {summaryToDelete.includes(summary) ? <input type="checkbox" onChange={() => handleSelectToDelete(summary)} checked /> :
+                          <input type="checkbox" onChange={() => handleSelectToDelete(summary)} />}  </td>
 
 
 
                       <td className='p-3'>{summary.create_on}</td>
                       <td className='p-3'> <a href="#" className='text-blue-500 hover:text-blue-700 underline'>{summary.name}</a> </td>
                       <td className='p-3'>{summary.create_by}</td>
-                      <td className='p-3'>{statusList[summary.status]}</td>
+
+                      {
+                        updateBtn ? 
+                       
+                        <td className='p-3'>
+                         
+                          <input id={index} name={summary.id} type='radio' value='1' onChange={(e) => handleSelectToUpdate(summary,e)} />
+                          <label htmlFor={index} >Active</label>
+                          <span className='px-3'></span>
+                          <input id={index+99} name={summary.id} type='radio' value='0' onChange={(e) => handleSelectToUpdate(summary,e)} />
+                          <label htmlFor={index+99}>Inactive</label>
+
+                        </td>
+
+                        :
+                        <td className='p-3'>{statusList[summary.status]}</td>
+                        
+                        
+                       
+                      }
+
+                    
                     </tr>
 
                   )) :
                   searchResult.map((summary, index) => (
                     <tr key={index} className='border-b-2 text-center'>
                       <td>
-                        {summaryToDelete.includes(summary) ? <input type="checkbox" onChange={() => handleSelect(summary)} checked /> :
-                          <input type="checkbox" onChange={() => handleSelect(summary)} />}  </td>
+                        {summaryToDelete.includes(summary) ? <input type="checkbox" onChange={() => handleSelectToDelete(summary)} checked /> :
+                          <input type="checkbox" onChange={() => handleSelectToDelete(summary)} />}  </td>
 
                       <td className='p-3'>{summary.create_on}</td>
                       <td className='p-3'> <a href="#" className='text-blue-500 hover:text-blue-700 underline'>{summary.name}</a> </td>

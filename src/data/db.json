@@ -1,109 +1,74 @@
 {
   "summarylist": [
     {
-      "id": "f243c560-c911-8376-f901-6811c3faaeaa",
-      "name": "a",
-      "create_on": "12/13/23",
-      "create_by": "e1045750@u.nus.edu",
-      "status": 1
-    },
-    {
       "id": "a7aa25ae-9a57-52c9-cb0a-2ad8cdefa7fb",
       "name": "b",
       "create_on": "12/13/23",
       "create_by": "e1045750@u.nus.edu",
-      "status": 1
+      "status": "1"
     },
     {
       "id": "d1650c6e-4e8e-3894-f093-7515f7c36265",
       "name": "v",
       "create_on": "12/13/23",
       "create_by": "e1045750@u.nus.edu",
-      "status": 1
+      "status": "1"
     },
     {
       "id": "8c0ff89b-44d8-5183-ace6-2fb0bb7f8d4a",
       "name": "d",
       "create_on": "12/13/23",
       "create_by": "e1045750@u.nus.edu",
-      "status": 1
+      "status": "1"
     },
     {
       "id": "7b03c991-04ff-65c8-5129-63f09284c5f6",
       "name": "e",
       "create_on": "12/13/23",
       "create_by": "e1045750@u.nus.edu",
-      "status": 1
+      "status": "1"
     },
     {
       "id": "5b3c5d0d-6e67-ed6c-2f67-cd5897441243",
       "name": "w",
       "create_on": "12/13/23",
       "create_by": "e1045750@u.nus.edu",
-      "status": 1
+      "status": "1"
     },
     {
       "id": "206627ca-9111-b368-2ebf-03fd11cd8a48",
       "name": "e",
       "create_on": "12/13/23",
       "create_by": "e1045750@u.nus.edu",
-      "status": 1
+      "status": "1"
     },
     {
       "id": "38421a44-19b2-0e79-0454-d6e21658c2f9",
       "name": "t",
       "create_on": "12/13/23",
       "create_by": "e1045750@u.nus.edu",
-      "status": 1
+      "status": "1"
     },
     {
       "id": "bb2737fc-f895-4697-93d4-4f8a7bc7a123",
       "name": "e",
       "create_on": "12/13/23",
       "create_by": "e1045750@u.nus.edu",
-      "status": 1
+      "status": "1"
     },
     {
       "id": "e465636e-3e40-2ddc-66b8-66f86fe4006c",
       "name": "w",
       "create_on": "12/13/23",
       "create_by": "e1045750@u.nus.edu",
-      "status": 1
+      "status": "1"
     },
     {
       "id": "d9db6d29-4185-5895-0a93-96691ed43c16",
       "name": "rw",
       "create_on": "12/13/23",
       "create_by": "e1045750@u.nus.edu",
-      "status": 1
-    },
-    {
-      "id": "bd60c04f-627e-2f90-1dff-0649b36c8377",
-      "name": "w",
-      "create_on": "12/13/23",
-      "create_by": "e1045750@u.nus.edu",
-      "status": 1
-    },
-    {
-      "id": "47ca6e4e-f30f-6d32-8016-1349fb876b4b",
-      "name": "r",
-      "create_on": "12/13/23",
-      "create_by": "e1045750@u.nus.edu",
-      "status": 1
-    },
-    {
-      "id": "cd0ca8cc-45d9-90e5-6205-1d028f484ea7",
-      "name": "w",
-      "create_on": "12/13/23",
-      "create_by": "e1045750@u.nus.edu",
-      "status": 1
-    },
-    {
-      "id": "41fa4f43-7cd0-efc0-07ac-aa7316e1be3f",
-      "name": "r",
-      "create_on": "12/13/23",
-      "create_by": "e1045750@u.nus.edu",
-      "status": 1
+      "status": "1"
     }
   ]
 }

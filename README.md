@@ -4,6 +4,7 @@
 - PopUp Model Form
 - Pagination
 - Multi delete function with checkbox
+- Update status
 
 
 # How to run
