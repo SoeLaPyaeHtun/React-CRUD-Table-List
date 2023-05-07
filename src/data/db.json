@@ -5,21 +5,21 @@
       "name": "b",
       "create_on": "12/13/23",
       "create_by": "e1045750@u.nus.edu",
-      "status": "1"
+      "status": "0"
     },
     {
       "id": "d1650c6e-4e8e-3894-f093-7515f7c36265",
       "name": "v",
       "create_on": "12/13/23",
       "create_by": "e1045750@u.nus.edu",
-      "status": "1"
+      "status": "0"
     },
     {
       "id": "8c0ff89b-44d8-5183-ace6-2fb0bb7f8d4a",
       "name": "d",
       "create_on": "12/13/23",
       "create_by": "e1045750@u.nus.edu",
-      "status": "1"
+      "status": "0"
     },
     {
       "id": "7b03c991-04ff-65c8-5129-63f09284c5f6",
@@ -61,14 +61,7 @@
       "name": "w",
       "create_on": "12/13/23",
       "create_by": "e1045750@u.nus.edu",
-      "status": "1"
-    },
-    {
-      "id": "d9db6d29-4185-5895-0a93-96691ed43c16",
-      "name": "rw",
-      "create_on": "12/13/23",
-      "create_by": "e1045750@u.nus.edu",
-      "status": "1"
+      "status": "0"
     }
   ]
 }

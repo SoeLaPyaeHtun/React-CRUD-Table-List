@@ -144,8 +144,11 @@ const Summary = () => {
       updateSummary(updateList_id[i], updateList[i])
     }
 
-    setSummaryToDelete([])
-    window.location.reload(true);
+    setSummaryToUpdate([])
+    console.log(updateList_id)
+    console.log(updateList)
+    setUpdateBtn(false)
+  
   }
 
   const deleteSummary = async (id) => {
@@ -158,12 +161,9 @@ const Summary = () => {
     };
 
   const updateSummary = async(id, summary) => {
-    const res = await api.put(`/summarylist/${id}`, {summary})
+    const res = await api.put(`/summarylist/${id}`, summary)
   }
 
-  const handelStatus = () => {
-    setUpdateBtn(false)
-  }
 
 
 
@@ -201,7 +201,7 @@ const Summary = () => {
             <span className='px-3'></span>
             {
               updateBtn ? 
-              <button className='bg-green-200 px-3 py-2 rounded-lg hover:bg-green-300' onClick={(handelStatus)}> Save Status </button>
+              <button className='bg-green-200 px-3 py-2 rounded-lg hover:bg-green-300' onClick={handleUpdate}> Save Status </button>
               :
               <button className='bg-green-200 px-3 py-2 rounded-lg hover:bg-green-300' onClick={() => setUpdateBtn(true)}> Update Status </button>
 
@@ -250,11 +250,28 @@ const Summary = () => {
                         updateBtn ? 
                        
                         <td className='p-3'>
-                         
-                          <input id={index} name={summary.id} type='radio' value='1' onChange={(e) => handleSelectToUpdate(summary,e)} />
+
+                          {
+                            summary.status == "1" ? 
+
+                            <input id={index} name={summary.id} type='radio' value='1' onChange={(e) => handleSelectToUpdate(summary,e)} checked/>
+                          
+                            
+                            :
+
+                            <input id={index} name={summary.id} type='radio' value='1' onChange={(e) => handleSelectToUpdate(summary,e)}/>
+                           
+                          }
+                          
                           <label htmlFor={index} >Active</label>
-                          <span className='px-3'></span>
-                          <input id={index+99} name={summary.id} type='radio' value='0' onChange={(e) => handleSelectToUpdate(summary,e)} />
+
+
+                          {
+                            summary.status == "0" ?
+                            <input id={index+99} name={summary.id} type='radio' value='0' onChange={(e) => handleSelectToUpdate(summary,e)} checked />
+                            :
+                            <input id={index+99} name={summary.id} type='radio' value='0' onChange={(e) => handleSelectToUpdate(summary,e)} />
+                          }
                           <label htmlFor={index+99}>Inactive</label>
 
                         </td>
