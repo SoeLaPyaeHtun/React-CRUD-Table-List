@@ -9,7 +9,7 @@ const SummaryModel = ({visible , closesummarymodel}) => {
     const [summary, setSummary] = useState({
         "id": uuid(),
         "name": "",
-        "create_on": "12/13/23",
+        "create_on": new Date().toISOString(),
         "create_by": "e1045750@u.nus.edu",
         "status": 1
     })
